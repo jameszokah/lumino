@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Image from 'next/image';
 
 interface Image {
     link: string;
@@ -89,10 +90,10 @@ const ImagesComponent: React.FC<ImagesComponentProps> = ({ images }) => {
                                             >
                                                 {!loadedImages[index] && (
                                                     <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
-                                                        <span className="text-gray-500">Loading...</span>
+                                                        <span className="">Loading...</span>
                                                     </div>
                                                 )}
-                                                <img
+                                                <Image
                                                     src={image.link}
                                                     alt={image.alt || 'Image'}
                                                     className={`w-full h-full object-cover rounded-lg ${loadedImages[index] ? 'block' : 'hidden'}`}
