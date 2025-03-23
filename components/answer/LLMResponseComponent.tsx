@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { type AI } from "../../app/action";
 import { useActions } from "ai/rsc";
 import Markdown from "react-markdown";
@@ -20,7 +20,7 @@ const Modal = ({
   }, [onClose]);
 
   return (
-    <div className="fixed top-0 right-0 mt-4 mr-4 z-50 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 w-full max-w-sm">
+    <div className="fixed top-0 right-0 mt-4 mr-4 z-50 bg-white shadow-lg rounded-lg p-4 w-full max-w-sm">
       <div className="flex items-center">
         <h2 className="text-lg font-semibold flex-grow  ">Notice</h2>
         <div className="flex justify-center ml-2">
@@ -56,7 +56,7 @@ const StreamingComponent = ({
             <h2 className="text-lg font-semibold flex-grow  ">Answer</h2>
             <img src="./groq.png" alt="groq logo" className="w-6 h-6" />
           </div>
-          <div className="dark:text-gray-300 text-gray-800">
+          <div className="text-gray-800">
             {currentLlmResponse}
           </div>
         </div>
@@ -78,12 +78,12 @@ const SkeletonLoader = () => {
   return (
     <div className=" bg-white shadow-lg rounded-lg p-4 mt-4">
       <div className="flex items-center">
-        <div className="h-4 bg-gray-300 rounded-full dark:bg-gray-600 w-32 mb-4 animate-pulse"></div>
+        <div className="h-4 bg-gray-300 rounded-full w-32 mb-4 animate-pulse"></div>
       </div>
       <div className="flex flex-col space-y-2">
-        <div className="h-2 bg-gray-300 rounded-full dark:bg-gray-700 w-full animate-pulse delay-75"></div>
-        <div className="h-2 bg-gray-300 rounded-full dark:bg-gray-700 w-3/4 animate-pulse delay-100"></div>
-        <div className="h-2 bg-gray-300 rounded-full dark:bg-gray-700 w-2/3 animate-pulse delay-150"></div>
+        <div className="h-2 bg-gray-300 rounded-full w-full animate-pulse delay-75"></div>
+        <div className="h-2 bg-gray-300 rounded-full w-3/4 animate-pulse delay-100"></div>
+        <div className="h-2 bg-gray-300 rounded-full w-2/3 animate-pulse delay-150"></div>
       </div>
     </div>
   );
@@ -110,6 +110,18 @@ const LLMResponseComponent = ({
     setShowModal(true);
   };
 
+  useEffect(() => {
+    let clear: NodeJS.Timeout;
+    if(copied) {
+      clear = setTimeout(() => {
+        setCopied((prev) => !prev)
+      }, 5000);
+    }
+    return () => {
+      clearTimeout(clear);
+    }
+  }, [copied])
+
   return (
     <div className={isolatedView ? "flex flex-col max-w-[1200px] mx-auto" : ""}>
       {showModal && (
@@ -126,7 +138,7 @@ const LLMResponseComponent = ({
               <div className="flex items-center">
                 <h2 className="text-lg font-semibold flex-grow  ">Response</h2>
               </div>
-              <div className="dark:text-gray-300 text-gray-800 markdown-container">
+              <div className="text-gray-800 markdown-container">
                 <Markdown>{llmResponse}</Markdown>
               </div>
               <div className="flex items-center justify-between">
@@ -148,7 +160,7 @@ const LLMResponseComponent = ({
                   {!isolatedView && (
                     <button
                       id="#not-clickable2"
-                      className="  focus:outline-none"
+                      className="focus:outline-none"
                       onClick={handleClearCache}
                     >
                       <ArrowsCounterClockwise size={20} />

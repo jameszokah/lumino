@@ -18,10 +18,10 @@ interface Place {
 const LocationSidebar = ({ places }: { places: Place[] }) => {
   const [showMore, setShowMore] = useState(false);
   // only show the first 5 places
-  places = places.slice(0, 4);
+  places = places?.slice(0, 4);
 
   return (
-    <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 mt-4">
+    <div className="bg-white shadow-lg rounded-lg p-4 mt-4">
       <div className="flex items-center">
         <h2 className="text-lg font-semibold flex-grow  ">Location Details</h2>
         {places.length > 3 && (
@@ -41,14 +41,14 @@ const LocationSidebar = ({ places }: { places: Place[] }) => {
         {places?.slice(0, showMore ? places.length : 3).map((place: Place) => (
           <div
             key={place.cid}
-            className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4"
+            className="bg-gray-100 rounded-lg p-4"
           >
             <h3 className="text-lg font-semibold mb-2">{place.title}</h3>
-            <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
+            <p className="text-gray-600s text-sm mb-2">
               {place.address}
             </p>
             <div className="flex items-center mb-2">
-              <span className="text-gray-600 dark:text-gray-400 text-sm mr-1">
+              <span className="text-gray-600s text-sm mr-1">
                 Rating:
               </span>
               <div className="flex items-center">
@@ -58,7 +58,7 @@ const LocationSidebar = ({ places }: { places: Place[] }) => {
                     className={`w-4 h-4 ${
                       index < Math.floor(place.rating)
                         ? "text-yellow-400"
-                        : "text-gray-300 dark:text-gray-500"
+                        : "text-gray-300 "
                     }`}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
@@ -73,11 +73,11 @@ const LocationSidebar = ({ places }: { places: Place[] }) => {
                 ))}
               </div>
             </div>
-            <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
+            <p className="text-gray-600 text-sm mb-2">
               Category: {place.category}
             </p>
             {place.phoneNumber && (
-              <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
+              <p className="text-gray-600  text-sm mb-2">
                 Phone:{" "}
                 <a
                   href={`tel:${place.phoneNumber}`}
@@ -88,7 +88,7 @@ const LocationSidebar = ({ places }: { places: Place[] }) => {
               </p>
             )}
             {place.website && (
-              <p className="text-gray-600 dark:text-gray-400 text-sm truncate">
+              <p className="text-gray-600  text-sm truncate">
                 Website:{" "}
                 <a
                   href={place.website}

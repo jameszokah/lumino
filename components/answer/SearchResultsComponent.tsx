@@ -134,12 +134,12 @@ const SearchResultsComponent = ({
                           />
                         ) : null
                       )}
-                    <span className="text-sm font-semibold dark:text-gray-200 text-gray-700">
+                    <span className="text-sm font-semibold text-gray-700">
                       View more
                     </span>
                   </>
                 ) : (
-                  <span className="text-sm font-semibold dark:text-gray-200 text-gray-700">
+                  <span className="text-sm font-semibold text-gray-700">
                     Show Less
                   </span>
                 )}

@@ -33,10 +33,10 @@ const ShoppingComponent: React.FC<ShoppingComponentProps> = ({ shopping }) => {
         <>
             {Array.from({ length: 5 }).map((_, index) => (
                 <div key={index} className="flex items-center space-x-4">
-                    <div className="w-10 h-10 bg-gray-300 dark:bg-gray-700 rounded-full animate-pulse"></div>
+                    <div className="w-10 h-10 bg-gray-300 rounded-full animate-pulse"></div>
                     <div className="flex-grow">
-                        <div className="w-2/3 h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse mb-2"></div>
-                        <div className="w-1/2 h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"></div>
+                        <div className="w-2/3 h-4 bg-gray-300 rounded animate-pulse mb-2"></div>
+                        <div className="w-1/2 h-4 bg-gray-300 rounded animate-pulse"></div>
                     </div>
                 </div>
             ))}
@@ -45,10 +45,10 @@ const ShoppingComponent: React.FC<ShoppingComponentProps> = ({ shopping }) => {
 
     // 7. Render the 'ShoppingComponent'
     return (
-        <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 mt-4">
+        <div className="bg-white shadow-lg rounded-lg p-4 mt-4">
             <div className="flex items-center">
-                <h2 className="text-lg font-semibold flex-grow text-gray-900 dark:text-gray-100">Shopping Results</h2>
-                <IconPlus className="w-4 h-4 cursor-pointer text-gray-500 dark:text-gray-400" onClick={() => setShowModal(true)} />
+                <h2 className="text-lg font-semibold flex-grow text-gray-900">Shopping Results</h2>
+                <IconPlus className="w-4 h-4 cursor-pointer text-gray-500" onClick={() => setShowModal(true)} />
             </div>
             <div className="mt-4">
                 {shopping.length === 0 ? (
@@ -62,13 +62,13 @@ const ShoppingComponent: React.FC<ShoppingComponentProps> = ({ shopping }) => {
                                 </a>
                             </div>
                             <div className="flex-grow">
-                                <a href={item.link} target="_blank" rel="noopener noreferrer" className="font-semibold text-sm mb-1 hover:underline text-gray-900 dark:text-gray-100">{item.title}</a>
-                                <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
+                                <a href={item.link} target="_blank" rel="noopener noreferrer" className="font-semibold text-sm mb-1 hover:underline text-gray-900">{item.title}</a>
+                                <div className="flex items-center text-xs text-gray-500">
                                     <span className="mr-1">{item.source}</span>
                                     <span className="text-yellow-500 mr-1">{'★'.repeat(Math.floor(item.rating))}</span>
                                     <span>({item.ratingCount})</span>
                                 </div>
-                                <p className="text-gray-900 dark:text-gray-100 font-semibold text-sm">{item.price}</p>
+                                <p className="text-gray-900 font-semibold text-sm">{item.price}</p>
                             </div>
                         </div>
                     ))
@@ -77,10 +77,10 @@ const ShoppingComponent: React.FC<ShoppingComponentProps> = ({ shopping }) => {
             {showModal && (
                 <div className="fixed inset-0 flex items-center justify-center z-50">
                     <div className="fixed inset-0 bg-black opacity-10 transition-opacity" onClick={() => setShowModal(false)}></div>
-                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-3xl w-full mx-auto overflow-hidden relative">
-                        <div className="sticky top-0 bg-white dark:bg-gray-800 px-6 py-4 flex items-center justify-between border-b border-gray-200 dark:border-gray-700">
-                            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Shopping Results</h2>
-                            <IconClose className="w-6 h-6 cursor-pointer text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition duration-150 ease-in-out" onClick={() => setShowModal(false)} />
+                    <div className="bg-white rounded-lg shadow-xl max-w-3xl w-full mx-auto overflow-hidden relative">
+                        <div className="sticky top-0 bg-white px-6 py-4 flex items-center justify-between border-b border-gray-200">
+                            <h2 className="text-2xl font-bold text-gray-900">Shopping Results</h2>
+                            <IconClose className="w-6 h-6 cursor-pointer text-gray-500 hover:text-gray-900 transition duration-150 ease-in-out" onClick={() => setShowModal(false)} />
                         </div>
                         <div className="overflow-y-auto p-6 space-y-6 max-h-[70vh]">
                             {shopping.map((item, index) => (
@@ -91,14 +91,14 @@ const ShoppingComponent: React.FC<ShoppingComponentProps> = ({ shopping }) => {
                                         </a>
                                     </div>
                                     <div className="flex-grow">
-                                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="font-bold text-xl mb-2 hover:underline text-gray-900 dark:text-gray-100">{item.title}</a>
-                                        <p className="text-gray-500 dark:text-gray-400 text-base mb-2">{item.source}</p>
+                                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="font-bold text-xl mb-2 hover:underline text-gray-900">{item.title}</a>
+                                        <p className="text-gray-500 text-base mb-2">{item.source}</p>
                                         <div className="flex items-center mb-2">
                                             <span className="text-yellow-500 text-lg mr-1">{'★'.repeat(Math.floor(item.rating))}</span>
-                                            <span className="text-gray-500 dark:text-gray-400 text-sm">{item.ratingCount}</span>
+                                            <span className="text-gray-500 text-sm">{item.ratingCount}</span>
                                         </div>
-                                        <p className="text-gray-900 dark:text-gray-100 font-bold text-lg mb-2">{item.price}</p>
-                                        {item.delivery && <p className="text-gray-500 dark:text-gray-400 text-base">{item.delivery}</p>}
+                                        <p className="text-gray-900 font-bold text-lg mb-2">{item.price}</p>
+                                        {item.delivery && <p className="text-gray-500 text-base">{item.delivery}</p>}
                                     </div>
                                 </div>
                             ))}

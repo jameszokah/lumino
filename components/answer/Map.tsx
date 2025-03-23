@@ -56,7 +56,7 @@ const Map = ({ places }: { places: Place[] }) => {
       : [0, 0];
 
   return (
-    <div className={`bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 mt-4 `}>
+    <div className={`bg-white shadow-lg rounded-lg p-4 mt-4 `}>
       <div className="flex items-center">
         <h2 className="text-lg font-semibold flex-grow  ">Locations</h2>
       </div>

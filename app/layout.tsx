@@ -10,13 +10,13 @@ import { Header } from "@/components/header";
 import { Providers } from "@/components/providers";
 
 const meta = {
-  title: "Lumio  AI",
+  title: "Lumino  AI",
   description: "anwser engine built by developers digest",
 };
 export const metadata: Metadata = {
   ...meta,
   title: {
-    default: "Lumio  AI",
+    default: "Lumino  AI",
     template: `%s - answer website`,
   },
   icons: {
@@ -61,12 +61,12 @@ export default function RootLayout({
         <AI>
           <Providers
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="light"
             enableSystem
             disableTransitionOnChange
           >
             <div className="flex flex-col min-h-screen">
-              <Header />
+              {/* <Header /> */}
               <main className="flex flex-col flex-1 bg-background px-4">
                 {children}
               </main>

@@ -1,7 +1,7 @@
 import * as fal from "@fal-ai/serverless-client";
 
 export async function falAiStableDiffusion3Medium(mentionTool: string, userMessage: string, streamable: any): Promise<void> {
-    const result = await fal.subscribe("fal-ai/stable-diffusion-v3-medium", {
+    const result = await fal.subscribe("fal-ai/flux-lora", {
         input: {
             prompt: userMessage,
             sync_mode: true

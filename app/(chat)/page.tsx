@@ -2,7 +2,7 @@
 // 1. Import Dependencies
 import { FormEvent, useEffect, useRef, useState, useCallback } from "react";
 import { useActions, readStreamableValue } from "ai/rsc";
-import { type AI } from "./action";
+import { type AI } from "../action";
 import { ChatScrollAnchor } from "@/lib/hooks/chat-scroll-anchor";
 import Textarea from "react-textarea-autosize";
 import { useEnterSubmit } from "@/lib/hooks/use-enter-submit";
@@ -31,12 +31,17 @@ import ShoppingComponent from "@/components/answer/ShoppingComponent";
 import FinancialChart from "@/components/answer/FinancialChart";
 import Spotify from "@/components/answer/Spotify";
 import ImageGenerationComponent from "@/components/answer/ImageGenerationComponent";
-import { ArrowUp, Paperclip } from "@phosphor-icons/react";
+import { Airplane, ArrowUp, Paperclip } from "@phosphor-icons/react";
 // OPTIONAL: Use Upstash rate limiting to limit the number of requests per user
 import RateLimit from "@/components/answer/RateLimit";
-import { mentionToolConfig } from "./tools/mentionToolConfig";
+import { mentionToolConfig } from "../tools/mentionToolConfig";
+import { SpeakerLoudIcon } from "@radix-ui/react-icons";
+import { BackgroundGradient } from "@/components/ui/background-gradient";
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import { BackgroundLines } from "@/components/ui/background-lines";
+import { useChatStore } from "@/store/state";
 // 2. Set up types
-interface SearchResult {
+export interface SearchResult {
   favicon: string;
   link: string;
   title: string;
@@ -129,6 +134,7 @@ const mentionTools = mentionToolConfig.useMentionQueries
 
 export default function Page() {
   const [file, setFile] = useState("");
+  const { addMessage } = useChatStore()
   const [mentionQuery, setMentionQuery] = useState("");
   const [selectedMentionTool, setSelectedMentionTool] = useState<string | null>(
     null
@@ -330,6 +336,8 @@ export default function Page() {
               }
             }
           }
+
+          // addMessage()
           return messagesCopy;
         });
         if (typedMessage.llmResponse) {
@@ -348,17 +356,21 @@ export default function Page() {
     fileReader.onload = (e) => {
       const base64File = e.target?.result;
       if (base64File) {
-        console.log("base64File", base64File);
+        console.log("base64File: ", base64File);
         setFile(String(base64File));
       }
     };
-    fileReader.readAsDataURL(file);
+    fileReader?.readAsDataURL(file);
+    
   };
+  
   return (
-    <div>
-      {messages.length > 0 && (
+    <div className="">
+      
+      {/* {messages?.length > 0 && (
         <div className="flex flex-col">
-          {messages.map((message, index) => (
+          
+          {messages?.map((message, index) => (
             <div key={`message-${index}`}>
               {message.isolatedView ? (
                 selectedMentionTool === "fal-ai/stable-diffusion-v3-medium" ||
@@ -467,11 +479,26 @@ export default function Page() {
             </div>
           ))}
         </div>
-      )}
+      )} */}
+      {messages?.length === 0  && (
+            <BackgroundLines className="flex items-center justify-center w-full flex-col px-4 bg-transparent">
+            <div className="flex items-end">
+           
+            {/* <h2 className="text-2xl md:text-4xl lg:text-7xl font-sans py-2">❤️‍🔥🤝</h2> */}
+            </div>
+            <h2 className="bg-clip-text text-transparent text-center bg-gradient-to-b from-neutral-900 to-neutral-700 dark:from-neutral-600 dark:to-white text-2xl md:text-4xl lg:text-7xl font-sans py-2 md:py-10 relative z-20 font-bold tracking-tight">
+              Hi, I'm Lumino AI<br /> Trust me man, you're gonna love me. 
+            </h2>
+            <p className="max-w-xl mx-auto text-sm md:text-lg text-neutral-700 dark:text-neutral-400 text-center">
+              But first things first,  what can I help you with?
+              Ready to assist you with anything you need, from music, image generation, rag, finance, shopping,  location base questions, you name it, 😎  lets gooooo! 🏋️💪😤 
+            </p>
+          </BackgroundLines>
+          )}
       <div
-        className={`px-2 fixed inset-x-0 bottom-0 w-full duration-300 ease-in-out animate-in dark:from-gray-900/10 dark:from-10% peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px]] mb-4 bring-to-front`}
+        className={`px-2 fixed z-10 inset-x-0 bottom-0 w-full duration-300 ease-in-out animate-in dark:from-gray-900/10 dark:from-10% peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px]] mb-6 bring-to-front`}
       >
-        <div className="mx-auto max-w-xl sm:px-4 ">
+        <div className="mx-auto max-w-xl sm:px-4">
           {messages.length === 0 && !inputValue && (
             <InitialQueries
               questions={[
@@ -480,6 +507,7 @@ export default function Page() {
                 "Where can I get the best bagel in NYC?",
                 "I want to buy a mens patagonia vest",
               ]}
+              Icons={[<Airplane className="w-32" />, <Airplane />, <Airplane />, <SpeakerLoudIcon /> ]}
               handleFollowUpClick={handleFollowUpClick}
             />
           )}
@@ -494,7 +522,7 @@ export default function Page() {
                   .map((tool) => (
                     <li
                       key={tool.id}
-                      className="flex items-center cursor-pointer  bg-white shadow-lg rounded-lg p-4 mb-2"
+                      className="flex items-center cursor-pointer bg-white shadow-lg rounded-lg p-4 mb-2"
                       onClick={() => {
                         setSelectedMentionTool(tool.id);
                         setSelectedMentionToolLogo(tool.logo);
@@ -544,7 +572,7 @@ export default function Page() {
               if (!value) return;
             }}
           >
-            <div className="relative flex flex-col w-full overflow-hidden max-h-60 grow  bg-gray-100 border sm:px-2">
+            <div className="relative flex flex-col w-full shadow-none max-h-60 grow sm:px-2">
               {selectedMentionToolLogo && (
                 <img
                   src={selectedMentionToolLogo}
@@ -574,6 +602,7 @@ export default function Page() {
                   />
                 </>
               )}
+              <BackgroundGradient className="rounded-[22px] bg-white flex justify-center items-center">
               <Textarea
                 ref={inputRef}
                 tabIndex={0}
@@ -610,14 +639,25 @@ export default function Page() {
                   }
                 }}
               />
+              </BackgroundGradient>
               <ChatScrollAnchor trackVisibility={true} />
-              <div className="absolute right-5 top-4">
+              <div className="absolute right-5 top-4 z-20">
                 <Tooltip>
                   <TooltipTrigger asChild>
+                  {/* <HoverBorderGradient
+        containerClassName="rounded-full"
+        as="button"
+        className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
+      >
+        <ArrowUp />
+                      <span className="sr-only">Send message</span>
+      </HoverBorderGradient> */}
                     <Button
                       type="submit"
                       size="icon"
+                      variant={'gooeyRight'}
                       disabled={inputValue === ""}
+                      className="mr-3"
                     >
                       <ArrowUp />
                       <span className="sr-only">Send message</span>

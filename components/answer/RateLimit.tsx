@@ -39,7 +39,7 @@ const RateLimit = () => {
             </svg>
           </button>
         </div>
-        <p className="text-gray-600 dark:text-gray-400 text-lg">
+        <p className="text-gray-600 text-lg">
           You have reached the rate limit for the current period. Please try
           again soon!
         </p>
