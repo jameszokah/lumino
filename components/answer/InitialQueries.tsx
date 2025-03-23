@@ -20,10 +20,8 @@ const InitialQueries = ({
 
   const handleQuestionClick = (question: string) => {
     handleFollowUpClick(question);
-   const chat = createChat({title: question,})
-    router.replace(`chats/${chat.id}`)
-
-
+    const chat = createChat({title: question,})
+    router.replace(`/chats/${chat.id}`)
   };
 
   return (

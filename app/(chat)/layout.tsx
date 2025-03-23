@@ -27,10 +27,9 @@ export default function ChatLayout({
 
   // const chatLayoutSegment = useSelectedLayoutSegment('chats')
   const {chatId} = useParams<{chatId: string}>()
-  const {isValidChatId} = useChatStore()
+  const {isValidChatId, chats} = useChatStore()
 
-
-  
+  const currentChat = chats.find(chat => chat.id === chatId)
 
   console.log(isValidChatId(chatId));
   return (
@@ -53,13 +52,13 @@ export default function ChatLayout({
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden md:block" />
               <BreadcrumbItem>
-                <BreadcrumbPage>XoVDCBD</BreadcrumbPage>
+                <BreadcrumbPage>{currentChat?.title || 'New Chat'}</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
-          {children}
+          {isValidChatId(chatId) ? children : <div>Chat not found</div>}
           {/* {Array.from({ length: 24 }).map((_, index) => (
             <div
               key={index}
